@@ -9,7 +9,7 @@ class Player(pg.sprite.Sprite):
         pg.sprite.Sprite.__init__(self, self.groups)
         self.game = game
         self.image = pg.Surface((TILESIZE, TILESIZE))
-        self.image.fill(GREEN)
+        self.image.fill(BLACK)
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y
@@ -20,9 +20,10 @@ class Player(pg.sprite.Sprite):
             self.x += X
             self.y += Y
 
+    # checks for walls and also map boundaries
     def wall_collision(self, X=0, Y=0):
         for wall in self.game.walls:
-            if wall.x == self.x + X and wall.y == self.y + Y:
+            if wall.x == self.x + X and wall.y == self.y + Y or self.x + X < 0 or self.y + Y < 0 or (self.x + X) > (WIDTH/TILESIZE)-1 or (self.y + Y) > (HEIGHT/TILESIZE)-1:
                 return True
         return False
 
@@ -54,6 +55,21 @@ class Trail(pg.sprite.Sprite):
         self.game = game
         self.image = pg.Surface((TILESIZE, TILESIZE))
         self.image.fill(WHITE)
+        self.rect = self.image.get_rect()
+        self.x = x
+        self.y = y
+        self.rect.x = x * TILESIZE
+        self.rect.y = y * TILESIZE
+
+
+# finish line sprite
+class End(pg.sprite.Sprite):
+    def __init__(self, game, x, y):
+        self.groups = game.all_sprites, game.finish
+        pg.sprite.Sprite.__init__(self, self.groups)
+        self.game = game
+        self.image = pg.Surface((TILESIZE, TILESIZE))
+        self.image.fill(GREEN)
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y

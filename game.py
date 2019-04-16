@@ -3,7 +3,7 @@ import sys
 from os import path
 from definitions import *
 from sprites import *
-import BENSPF
+from BensPF import *
 
 
 class Game:
@@ -18,7 +18,7 @@ class Game:
     def load_gamemap(self):
         dir = path.dirname(__file__)
         self.map = []  # empty list to store map data
-        with open(path.join(dir, 'map2.txt'), 'rt') as f:
+        with open(path.join(dir, 'map3.txt'), 'rt') as f:
             for line in f:
                 self.map.append(line)  # read in map line-by-line
 
@@ -27,6 +27,7 @@ class Game:
         self.all_sprites = pg.sprite.Group()
         self.walls = pg.sprite.Group()
         self.trails = pg.sprite.Group()
+        self.finish = pg.sprite.Group()
 
         for row, tiles in enumerate(self.map):
             for col, tile in enumerate(tiles):
@@ -34,6 +35,12 @@ class Game:
                     Wall(self, col, row)
                 if tile == 'P':
                     self.player = Player(self, col, row)
+                if tile == 'X':
+                    self.end = End(self, col, row)
+
+    # win condition
+    def win(self):
+        return self.player.x == self.end.x and self.player.y == self.end.y
 
     # game loop
     def game_loop(self):
@@ -43,6 +50,9 @@ class Game:
             self.events()
             self.update()
             self.draw()
+            if self.win():
+                print("You reached the goal!")
+                self.playing = False
 
     def quit(self):
         pg.quit()
@@ -73,17 +83,17 @@ class Game:
                 if event.key == pg.K_ESCAPE:
                     self.quit()
                 if event.key == pg.K_LEFT:
-                    print([self.player.x, self.player.y])
                     self.player.move(X=-1)
+                    print([self.player.y, self.player.x])
                 if event.key == pg.K_RIGHT:
-                    print([self.player.x, self.player.y])
                     self.player.move(X=1)
+                    print([self.player.y, self.player.x])
                 if event.key == pg.K_UP:
-                    print([self.player.x, self.player.y])
                     self.player.move(Y=-1)
+                    print([self.player.y, self.player.x])
                 if event.key == pg.K_DOWN:
-                    print([self.player.x, self.player.y])
                     self.player.move(Y=1)
+                    print([self.player.y, self.player.x])
 
     def show_start_screen(self):
         pass

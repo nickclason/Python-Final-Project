@@ -103,52 +103,48 @@ def findNeighbors(coordinate):
     return neighborList
 
 
-def findPath(x, y):
-    # Declare variables
-    rowCount = 0
-    colCount = 0
-    mazeOrig = createOrigMaze()
-    mazePaths = createEmptyMaze()
-    startLocation = []
-    solutionLocation = []
-    neighborsList = []
+# Declare variables
+rowCount = 0
+colCount = 0
+mazeOrig = createOrigMaze()
+mazePaths = createEmptyMaze()
+startLocation = []
+solutionLocation = []
+neighborsList = []
 
-    #                        U        D       R       L
-    neighborRelativeVals = [[-1, 0], [1, 0], [0, 1], [0, -1]]
+#                        U        D       R       L
+neighborRelativeVals = [[-1, 0], [1, 0], [0, 1], [0, -1]]
 
-    # Find Start Location
-    for i, row in enumerate(mazeOrig):
-        for j, column in enumerate(mazeOrig[i]):
-            if mazeOrig[i][j] == "O":
-                startLocation += [i]
-                startLocation += [j]
+# Find Start Location
+for i, row in enumerate(mazeOrig):
+    for j, column in enumerate(mazeOrig[i]):
+        if mazeOrig[i][j] == "O":
+            startLocation += [i]
+            startLocation += [j]
 
-    # Get amount of rows and cols
-    for i, row in enumerate(mazeOrig):
-        for j, column in enumerate(mazeOrig[i]):
-            if i == 0:
-                colCount += 1
-        rowCount += 1
+# Get amount of rows and cols
+for i, row in enumerate(mazeOrig):
+    for j, column in enumerate(mazeOrig[i]):
+        if i == 0:
+            colCount += 1
+    rowCount += 1
 
-    # Check if the user did not provide a start location
-    if startLocation == []:
-        print("The start location was not found. Please put a 'O' somewhere in the maze")
-        exit()
+# Check if the user did not provide a start location
+if startLocation == []:
+    print("The start location was not found. Please put a 'O' somewhere in the maze")
+    exit()
 
-    neighborsQ = queue.Queue()
-    neighborsQ.put(startLocation)  # enqueue
-    fillFirstValue(startLocation)
-
-    while solutionLocation == []:
-        tempCoordinate = neighborsQ.get()  # dequeue
-        neighborsList = findNeighbors(tempCoordinate)
-        for neighbor in neighborsList:
-            if solutionLocation != []:
-                break
-            else:
-                fillMazeSpot(tempCoordinate, neighbor)
-                neighborsQ.put(neighbor)
-                print(neighbor)
-
+neighborsQ = queue.Queue()
+neighborsQ.put(startLocation)  # enqueue
+fillFirstValue(startLocation)
+while solutionLocation == []:
+    tempCoordinate = neighborsQ.get()  # dequeue
+    neighborsList = findNeighbors(tempCoordinate)
+    for neighbor in neighborsList:
+        if solutionLocation != []:
+            break
+        else:
+            fillMazeSpot(tempCoordinate, neighbor)
+            neighborsQ.put(neighbor)
 
 print(solutionLocation)
