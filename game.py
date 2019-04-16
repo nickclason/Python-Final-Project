@@ -4,6 +4,7 @@ from os import path
 from definitions import *
 from sprites import *
 from BensPF import *
+from pathfinding import *
 
 
 class Game:
@@ -35,12 +36,17 @@ class Game:
                     Wall(self, col, row)
                 if tile == 'P':
                     self.player = Player(self, col, row)
+                    self.computer = Computer(self, col, row, short_list)
                 if tile == 'X':
                     self.end = End(self, col, row)
 
-    # win condition
-    def win(self):
+    # player win condition
+    def player_win(self):
         return self.player.x == self.end.x and self.player.y == self.end.y
+
+    # computer win condition
+    def computer_win(self):
+        return self.computer.x == self.end.x and self.computer.y == self.end.y
 
     # game loop
     def game_loop(self):
@@ -50,8 +56,11 @@ class Game:
             self.events()
             self.update()
             self.draw()
-            if self.win():
+            if self.player_win():
                 print("You reached the goal!")
+                self.playing = False
+            if self.computer_win():
+                print("The computer beat you to the end!")
                 self.playing = False
 
     def quit(self):
@@ -84,16 +93,24 @@ class Game:
                     self.quit()
                 if event.key == pg.K_LEFT:
                     self.player.move(X=-1)
-                    print([self.player.y, self.player.x])
+                    self.computer.move()
+                    # print([self.player.y, self.player.x])
+                    print([self.computer.y, self.computer.x])
                 if event.key == pg.K_RIGHT:
                     self.player.move(X=1)
-                    print([self.player.y, self.player.x])
+                    self.computer.move()
+                    # print([self.player.y, self.player.x])
+                    print([self.computer.y, self.computer.x])
                 if event.key == pg.K_UP:
                     self.player.move(Y=-1)
-                    print([self.player.y, self.player.x])
+                    self.computer.move()
+                    # print([self.player.y, self.player.x])
+                    print([self.computer.y, self.computer.x])
                 if event.key == pg.K_DOWN:
                     self.player.move(Y=1)
-                    print([self.player.y, self.player.x])
+                    self.computer.move()
+                    # print([self.player.y, self.player.x])
+                    print([self.computer.y, self.computer.x])
 
     def show_start_screen(self):
         pass
@@ -104,6 +121,8 @@ class Game:
 # create the game object
 g = Game()
 g.show_start_screen()
+shortest = path_find()
+short_list = shortest[1]
 while True:
     g.new_game()
     g.game_loop()
