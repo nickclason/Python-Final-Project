@@ -3,6 +3,7 @@ import sys
 from os import path
 from definitions import *
 from sprites import *
+import BENSPF
 
 
 class Game:
@@ -17,7 +18,7 @@ class Game:
     def load_gamemap(self):
         dir = path.dirname(__file__)
         self.map = []  # empty list to store map data
-        with open(path.join(dir, 'map1.txt'), 'rt') as f:
+        with open(path.join(dir, 'map2.txt'), 'rt') as f:
             for line in f:
                 self.map.append(line)  # read in map line-by-line
 
@@ -72,12 +73,16 @@ class Game:
                 if event.key == pg.K_ESCAPE:
                     self.quit()
                 if event.key == pg.K_LEFT:
+                    print([self.player.x, self.player.y])
                     self.player.move(X=-1)
                 if event.key == pg.K_RIGHT:
+                    print([self.player.x, self.player.y])
                     self.player.move(X=1)
                 if event.key == pg.K_UP:
+                    print([self.player.x, self.player.y])
                     self.player.move(Y=-1)
                 if event.key == pg.K_DOWN:
+                    print([self.player.x, self.player.y])
                     self.player.move(Y=1)
 
     def show_start_screen(self):
