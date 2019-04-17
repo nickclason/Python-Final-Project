@@ -95,22 +95,22 @@ class Game:
                     self.player.move(X=-1)
                     self.computer.move()
                     # print([self.player.y, self.player.x])
-                    print([self.computer.y, self.computer.x])
+                    # print([self.computer.y, self.computer.x])
                 if event.key == pg.K_RIGHT:
                     self.player.move(X=1)
                     self.computer.move()
                     # print([self.player.y, self.player.x])
-                    print([self.computer.y, self.computer.x])
+                    # print([self.computer.y, self.computer.x])
                 if event.key == pg.K_UP:
                     self.player.move(Y=-1)
                     self.computer.move()
                     # print([self.player.y, self.player.x])
-                    print([self.computer.y, self.computer.x])
+                    # print([self.computer.y, self.computer.x])
                 if event.key == pg.K_DOWN:
                     self.player.move(Y=1)
                     self.computer.move()
                     # print([self.player.y, self.player.x])
-                    print([self.computer.y, self.computer.x])
+                    # print([self.computer.y, self.computer.x])
 
     def show_start_screen(self):
         pass

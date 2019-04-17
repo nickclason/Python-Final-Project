@@ -147,4 +147,4 @@ while solutionLocation == []:
             fillMazeSpot(tempCoordinate, neighbor)
             neighborsQ.put(neighbor)
 
-print(solutionLocation)
+# print(solutionLocation)

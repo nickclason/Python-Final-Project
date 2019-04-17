@@ -49,7 +49,7 @@ class Computer(Player):
             self.i = 1
 
     def move(self):
-        if not self.wall_collision(self.path[self.i][0], self.path[self.i][1]):
+        if not self.wall_collision(self.path[self.i][1], self.path[self.i][0]):
             Trail(self.game, self.x, self.y)  # shows trail of current path
             self.x = self.path[self.i][1]
             self.y = self.path[self.i][0]
