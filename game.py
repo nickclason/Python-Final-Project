@@ -10,6 +10,7 @@ from pathfinding import *
 # Add menu to start/stop
 # Stop game once computer or player wins
 # Add restart option
+# Make computer difficulty (speed) change based on level?
 
 
 class Game:
@@ -54,6 +55,12 @@ class Game:
     def computer_win(self):
         return self.computer.x == self.end.x and self.computer.y == self.end.y
 
+    # end game
+    def end_level(self):
+        return (self.player.x == self.end.x and self.player.y == self.end.y or
+                self.computer.x == self.end.x and
+                self.computer.y == self.end.y)
+
     # game loop
     def game_loop(self):
         self.playing = True
@@ -62,18 +69,25 @@ class Game:
             self.time_change = self.clock.tick(FPS) / 1000
             time += self.clock.tick(FPS)
             print(time)
+
+            # computer moves based on time intervals
             if time > COMPUTER_PLAY_RATE:
                 self.computer.move()
                 time = 0
+
             self.events()
             self.update()
             self.draw()
-            if self.player_win():
-                print("You reached the goal!")
-                self.playing = False
-            if self.computer_win():
-                print("The computer beat you to the end!")
-                self.playing = False
+
+            # end level conditions/win checks
+            if self.end_level():
+                if self.player_win():
+                    print("You reached the goal!")
+                    self.playing = False
+                elif self.computer_win():
+                    print("The computer beat you to the end!")
+                    self.draw()
+                    self.playing = False
 
     def quit(self):
         pg.quit()
@@ -89,10 +103,17 @@ class Game:
         for y in range(0, HEIGHT, TILESIZE):
             pg.draw.line(self.window, LIGHTGREY, (0, y), (WIDTH, y))
 
+    def draw_text(self):
+        font = pg.font.Font(None, 100)
+        self.text = font.render("BEN IS A LOSER", True, (238, 58, 140))
+        self.window.blit(self.text, [WIDTH * .25, HEIGHT * .5])
+
     def draw(self):
         self.window.fill(BGCOLOR)
         self.draw_grid()
         self.all_sprites.draw(self.window)
+        if self.end_level():
+            self.draw_text()
         pg.display.flip()
 
     # handles all events
