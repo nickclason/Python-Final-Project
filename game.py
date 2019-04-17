@@ -6,6 +6,11 @@ from sprites import *
 from BensPF import *
 from pathfinding import *
 
+# Add level count
+# Add menu to start/stop
+# Stop game once computer or player wins
+# Add restart option
+
 
 class Game:
     def __init__(self):
@@ -42,7 +47,8 @@ class Game:
 
     # player win condition
     def player_win(self):
-        return self.player.x == self.end.x and self.player.y == self.end.y
+        return (self.player.x == self.end.x and self.player.y == self.end.y and
+                self.player.moveCount <= len(self.computer.path))
 
     # computer win condition
     def computer_win(self):
@@ -51,8 +57,14 @@ class Game:
     # game loop
     def game_loop(self):
         self.playing = True
+        time = 0
         while self.playing:
             self.time_change = self.clock.tick(FPS) / 1000
+            time += self.clock.tick(FPS)
+            print(time)
+            if time > COMPUTER_PLAY_RATE:
+                self.computer.move()
+                time = 0
             self.events()
             self.update()
             self.draw()
@@ -93,22 +105,22 @@ class Game:
                     self.quit()
                 if event.key == pg.K_LEFT:
                     self.player.move(X=-1)
-                    self.computer.move()
+                    # self.computer.move()
                     # print([self.player.y, self.player.x])
                     # print([self.computer.y, self.computer.x])
                 if event.key == pg.K_RIGHT:
                     self.player.move(X=1)
-                    self.computer.move()
+                    # self.computer.move()
                     # print([self.player.y, self.player.x])
                     # print([self.computer.y, self.computer.x])
                 if event.key == pg.K_UP:
                     self.player.move(Y=-1)
-                    self.computer.move()
+                    # self.computer.move()
                     # print([self.player.y, self.player.x])
                     # print([self.computer.y, self.computer.x])
                 if event.key == pg.K_DOWN:
                     self.player.move(Y=1)
-                    self.computer.move()
+                    # self.computer.move()
                     # print([self.player.y, self.player.x])
                     # print([self.computer.y, self.computer.x])
 

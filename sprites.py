@@ -13,12 +13,14 @@ class Player(pg.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y
+        self.moveCount = 0
 
     def move(self, X=0, Y=0):
         if not self.wall_collision(X, Y):
             Trail(self.game, self.x, self.y)  # shows trail of current path
             self.x += X
             self.y += Y
+            self.moveCount += 1
 
     # checks for walls and also map boundaries
     def wall_collision(self, X=0, Y=0):
@@ -47,6 +49,7 @@ class Computer(Player):
             self.y = y
             self.path = path_lst
             self.i = 1
+            self.moveCount = 0
 
     def move(self):
         if not self.wall_collision(self.path[self.i][1], self.path[self.i][0]):
@@ -54,6 +57,7 @@ class Computer(Player):
             self.x = self.path[self.i][1]
             self.y = self.path[self.i][0]
             self.i += 1
+            self.moveCount += 1
 
     # checks for walls and also map boundaries for computer movements
     def wall_collision(self, X=0, Y=0):
