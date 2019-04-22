@@ -51,7 +51,7 @@ class Game:
         return (self.player.x == self.end.x and self.player.y == self.end.y and
                 self.player.moveCount <= len(self.computer.path))
 
-    # computer win condition
+    # computer win conditino
     def computer_win(self):
         return self.computer.x == self.end.x and self.computer.y == self.end.y
 
@@ -68,9 +68,7 @@ class Game:
         while self.playing:
             self.time_change = self.clock.tick(FPS) / 1000
             time += self.clock.tick(FPS)
-            print(time)
-
-            # computer moves based on time intervals
+            # computer moves based on time inttervals
             if time > COMPUTER_PLAY_RATE:
                 self.computer.move()
                 time = 0
@@ -86,7 +84,7 @@ class Game:
                     self.playing = False
                 elif self.computer_win():
                     print("The computer beat you to the end!")
-                    self.draw()
+                    self.draw_text()
                     self.playing = False
 
     def quit(self):
@@ -107,13 +105,12 @@ class Game:
         font = pg.font.Font(None, 100)
         self.text = font.render("BEN IS A LOSER", True, (238, 58, 140))
         self.window.blit(self.text, [WIDTH * .25, HEIGHT * .5])
+        pg.display.flip()
 
     def draw(self):
         self.window.fill(BGCOLOR)
         self.draw_grid()
         self.all_sprites.draw(self.window)
-        if self.end_level():
-            self.draw_text()
         pg.display.flip()
 
     # handles all events
@@ -145,18 +142,19 @@ class Game:
                     # print([self.player.y, self.player.x])
                     # print([self.computer.y, self.computer.x])
 
-    def show_start_screen(self):
-        pass
+    # def show_start_screen(self):
+    #     pass
 
-    def show_go_screen(self):
-        pass
+    # def show_go_screen(self):
+    #     pass
 
 # create the game object
 g = Game()
-g.show_start_screen()
+# g.show_start_screen()
 shortest = path_find()
-short_list = shortest[1]
+short_list = shortest[1]  # list of moves for computer to make
+
 while True:
     g.new_game()
     g.game_loop()
-    g.show_go_screen()
+    # g.show_go_screen()

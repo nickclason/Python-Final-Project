@@ -15,5 +15,6 @@ FPS = 60
 TITLE = "Pathfinder®"
 BGCOLOR = DARKGREY
 
-TILESIZE = 32
-COMPUTER_PLAY_RATE = 10  # 50 is good, 10 for testing quickly
+TILESIZE = 64
+COMPUTER_PLAY_RATE = 15  # 50 is good, 10 for testing quickly
+#TILE_GRID = 
