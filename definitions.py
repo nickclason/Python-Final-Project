@@ -17,3 +17,7 @@ BGCOLOR = DARKGREY
 
 TILESIZE = 32
 COMPUTER_PLAY_RATE = 10  # 50 is good, 10 for testing quickly
+
+# Screen IDs
+TITLESCREEN = 0
+PLAYSCREEN = 1
