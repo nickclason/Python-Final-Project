@@ -15,5 +15,20 @@ FPS = 60
 TITLE = "Pathfinder®"
 BGCOLOR = DARKGREY
 
+<<<<<<< HEAD
 TILESIZE = 64
 COMPUTER_PLAY_RATE = 15  # 50 is good, 10 for testing quickly
+=======
+TILESIZE = 32
+COMPUTER_PLAY_RATE = 10  # 50 is good, 10 for testing quickly
+
+# Screen IDs
+TITLESCREEN = 0
+PLAYSCREEN = 1
+
+# Movement
+PLAYER_UP = [0, -1]
+PLAYER_DOWN = [0, 1]
+PLAYER_LEFT = [-1, 0]
+PLAYER_RIGHT = [1, 0]
+>>>>>>> Ryan/master
