@@ -17,4 +17,3 @@ BGCOLOR = DARKGREY
 
 TILESIZE = 64
 COMPUTER_PLAY_RATE = 15  # 50 is good, 10 for testing quickly
-#TILE_GRID = 
