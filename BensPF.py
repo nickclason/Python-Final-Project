@@ -1,5 +1,5 @@
 import queue
-
+from os import path
 # Off campus housing map
 """
 def createMapFromFile():
@@ -84,6 +84,8 @@ def createEmptyMaze():
 
     return maze
 """
+
+
 class Pathfinding():
 
     #                        U        D       R       L
@@ -97,7 +99,7 @@ class Pathfinding():
         self.mazePaths[coordinate[0]][coordinate[1]] = 0
 
     # This function should only be passed valid, empty coordinates
-    def fillMazeSpot(self, origCoordinate,emptyCoordinate):
+    def fillMazeSpot(self, origCoordinate, emptyCoordinate):
         self.mazePaths[emptyCoordinate[0]][emptyCoordinate[1]] = self.mazePaths[origCoordinate[0]][origCoordinate[1]] + 1
 
     def isEnd(self, coordinate, neighborCoordinate):
@@ -199,24 +201,24 @@ class Pathfinding():
         for i, row in enumerate(self.mazeOrig):
             for j, column in enumerate(self.mazeOrig[i]):
                 if self.mazeOrig[i][j] == "O":
-                    startLocation += [i]
-                    startLocation += [j]
+                    self.startLocation += [i]
+                    self.startLocation += [j]
 
         # Get amount of rows and cols
         for i, row in enumerate(self.mazeOrig):
             for j, column in enumerate(self.mazeOrig[i]):
                 if i == 0:
-                    colCount += 1
-            rowCount += 1
+                    self.colCount += 1
+            self.rowCount += 1
 
         # Check if the user did not provide a start location
-        if startLocation == []:
+        if self.startLocation == []:
             print("The start location was not found. Please put a 'O' somewhere in the maze")
             exit()
 
         neighborsQ = queue.Queue()
-        neighborsQ.put(startLocation)
-        self.fillFirstValue(startLocation)
+        neighborsQ.put(self.startLocation)
+        self.fillFirstValue(self.startLocation)
 
         while self.solutionLocation == []:
             tempCoordinate = neighborsQ.get()
@@ -235,3 +237,17 @@ class Pathfinding():
         #print(finalPath)
         #print(startLocation)
         return finalPath
+
+
+def load_gamemap():
+    dir = path.dirname(__file__)
+    level = []  # empty list to store map data
+    with open(path.join(dir, 'map3.txt'), 'rt') as f:
+        for line in f:
+            level.append(line)  # read in map line-by-line
+    return level
+
+
+m1 = load_gamemap()
+p = Pathfinding(m1)
+p.findPath()
